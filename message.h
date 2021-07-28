@@ -10,7 +10,7 @@
 class Message
 {
 public:
-    enum class DECODE_STATUS : uint8_t
+    enum class ENCODE_STATUS : uint8_t
     {
         SUCCESS = 0,
         ERROR = 1
@@ -20,11 +20,13 @@ public:
 
     inline std::size_t GetLength() const { return messageLength_; }
 
-    DECODE_STATUS DecodeMessage(const std::string &message);
+    ENCODE_STATUS EncodeMessage(const std::string &message);
+
+    std::string DecodeMessage();
 
 private:
     // 65535 max length
-    static const std::size_t headerLength_ = 2;
+    static const uint16_t headerLength_ = 2;
 
     static const std::size_t maxMessageLength_ = 512;
 
