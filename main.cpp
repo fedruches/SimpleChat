@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <boost/asio.hpp>
+#include "boost/asio.hpp"
 
 #include "message.h"
 
@@ -10,6 +10,5 @@ int main()
 {
     std::cout << BOOST_VERSION << std::endl;
 
-    cout << "Hello World!" << endl;
     return 0;
 }
