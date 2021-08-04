@@ -28,3 +28,17 @@ std::string Message::DecodeMessage()
 
     return message;
 }
+
+Message::DECODE_STATUS Message::DecodeHeader()
+{
+    std::array<char, headerLength_> header;
+    std::memcpy(header.data(), data_.data(), headerLength_);
+    messageLength_ = *reinterpret_cast<std::size_t*>(header.data());
+
+    if (messageLength_ > maxMessageLength_)
+    {
+        messageLength_ = 0;
+        return DECODE_STATUS::ERROR;
+    }
+    return DECODE_STATUS::SUCCESS;
+}

@@ -23,6 +23,8 @@ public:
 private:
     void do_connect(const tcp::resolver::results_type &endpoints);
 
+    void do_read_header();
+
 private:
     boost::asio::io_context &io_context_;
 

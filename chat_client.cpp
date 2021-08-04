@@ -22,3 +22,8 @@ void ChatClient::do_connect(const tcp::resolver::results_type &endpoints)
             std::cout << "Connection failed. Reason: " << ec.message() << std::endl;
     });
 }
+
+void ChatClient::do_read_header()
+{
+    //boost::asio::async_read(socket_, boost::asio::buffer(readMsg_))
+}

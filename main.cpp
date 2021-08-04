@@ -7,12 +7,6 @@
 
 using namespace std;
 
-boost::asio::io_context io_context;
-
-tcp::resolver r(io_context);
-tcp::resolver::query q("localhost", "5000");
-tcp::socket s(io_context);
-
 int main()
 {    
     boost::asio::io_context io_context;

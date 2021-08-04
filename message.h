@@ -20,6 +20,12 @@ public:
         ERROR
     };
 
+    enum class DECODE_STATUS : uint8_t
+    {
+        SUCCESS = 0,
+        ERROR
+    };
+
     void DeleteAll();
 
     Message();
@@ -27,8 +33,10 @@ public:
     inline std::size_t GetLength() const { return messageLength_; }
 
     ENCODE_STATUS EncodeMessage(const std::string &message);
-    
+
     std::string DecodeMessage();
+
+    DECODE_STATUS DecodeHeader();
 
 private:
     // 65535 max length
