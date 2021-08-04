@@ -30,6 +30,6 @@ elseif(UNIX)
     include_directories(${Boost_INCLUDE_DIR})
 endif()
 
-add_executable(${PROJECT_NAME} Tests/message_tests.cpp main.cpp message.cpp)
+add_executable(${PROJECT_NAME} Tests/message_tests.cpp main.cpp message.cpp chat_client.cpp)
 
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} Threads::Threads)

@@ -3,16 +3,27 @@
 #include <boost/asio.hpp>
 
 #include "message.h"
+#include "chat_client.h"
 
 using namespace std;
 
-int main()
-{
-    Message message;
-    message.EncodeMessage("Hello World!");
+boost::asio::io_context io_context;
 
-    std::cout << BOOST_VERSION << std::endl;
-    std::cout << message.DecodeMessage() << std::endl;
+tcp::resolver r(io_context);
+tcp::resolver::query q("localhost", "5000");
+tcp::socket s(io_context);
+
+int main()
+{    
+    boost::asio::io_context io_context;
+    tcp::resolver resolver(io_context);
+    auto endpoints = resolver.resolve("localhost", "5000");
+
+    ChatClient chatClient(io_context, endpoints);
+
+    std::thread ioContextThread([&io_context](){ io_context.run(); });
+
+    ioContextThread.join();
 
     return 0;
 }
