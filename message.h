@@ -5,6 +5,7 @@
 #include <array>
 #include <string>
 #include <cstdint>
+#include <iostream>
 
 #include <boost/log/trivial.hpp>
 
@@ -30,11 +31,23 @@ public:
     
     std::string DecodeMessage();
 
+    void EncodeHeader();
+
+    bool DecodeHeader();
+
+    std::size_t GetMessageLength() const;
+
+    const char * GetData() const;
+
+    char * GetData();
+
+    inline static uint16_t GetHeaderLength() { return headerLength_; };
+
 private:
     // 65535 max length
-    static const uint16_t headerLength_ = 2;
+    static constexpr uint16_t headerLength_ = 2;
 
-    static const std::size_t maxMessageLength_ = 512;
+    static constexpr std::size_t maxMessageLength_ = 512;
 
     std::size_t messageLength_ = 0;
 

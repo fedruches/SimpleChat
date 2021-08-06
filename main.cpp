@@ -15,15 +15,21 @@ tcp::socket s(io_context);
 
 int main()
 {    
-    boost::asio::io_context io_context;
-    tcp::resolver resolver(io_context);
-    auto endpoints = resolver.resolve("localhost", "5000");
+//    boost::asio::io_context io_context;
+//    tcp::resolver resolver(io_context);
+//    auto endpoints = resolver.resolve("localhost", "5000");
 
-    ChatClient chatClient(io_context, endpoints);
+//    ChatClient chatClient(io_context, endpoints);
 
-    std::thread ioContextThread([&io_context](){ io_context.run(); });
+//    std::thread ioContextThread([&io_context](){ io_context.run(); });
 
-    ioContextThread.join();
+//    ioContextThread.join();
+
+    Message message;
+    message.EncodeMessage("Hello");
+    std::cout << message.DecodeMessage() << std::endl;
+
+    message.DecodeHeader();
 
     return 0;
 }

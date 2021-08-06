@@ -14,11 +14,16 @@ ChatClient::~ChatClient()
 void ChatClient::do_connect(const tcp::resolver::results_type &endpoints)
 {
     boost::asio::async_connect(socket_, endpoints,
-                               [this](const boost::system::error_code &ec, const tcp::endpoint)
+                               [](const boost::system::error_code &ec, const tcp::endpoint)
     {
         if (!ec)
             std::cout << "Successfull connection" << std::endl;
         else
             std::cout << "Connection failed. Reason: " << ec.message() << std::endl;
     });
+}
+
+void ChatClient::do_read_header()
+{
+    boost::asio::async_read(socket_, boost::asio::buffer(readMsg_.GetData()), Message::GetHeaderLength())
 }
