@@ -63,3 +63,13 @@ char *Message::GetData()
 {
     return data_.data();
 }
+
+const char *Message::GetBody() const
+{
+    return data_.data() + headerLength_;
+}
+
+char *Message::GetBody()
+{
+    return data_.data() + headerLength_;
+}

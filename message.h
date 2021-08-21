@@ -41,6 +41,10 @@ public:
 
     char * GetData();
 
+    const char * GetBody() const;
+
+    char * GetBody();
+
     inline static uint16_t GetHeaderLength() { return headerLength_; };
 
 private:

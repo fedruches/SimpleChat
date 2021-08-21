@@ -13,6 +13,8 @@ ChatClient::~ChatClient()
 
 void ChatClient::do_connect(const tcp::resolver::results_type &endpoints)
 {
+    std::cout << "do_connect()" << std::endl;
+
     boost::asio::async_connect(socket_, endpoints,
                                [](const boost::system::error_code &ec, const tcp::endpoint)
     {
@@ -25,5 +27,34 @@ void ChatClient::do_connect(const tcp::resolver::results_type &endpoints)
 
 void ChatClient::do_read_header()
 {
-    boost::asio::async_read(socket_, boost::asio::buffer(readMsg_.GetData()), Message::GetHeaderLength())
+    std::cout << "do_read_header()" << std::endl;
+
+    boost::asio::async_read(socket_,
+                            boost::asio::buffer(readMsg_.GetData(), Message::GetHeaderLength()),
+                            [this](const boost::system::error_code &ec, std::size_t /*lenght*/)
+    {
+        if (!ec && readMsg_.DecodeHeader())
+            do_read_body();
+        else
+            socket_.close();
+    });
+}
+
+void ChatClient::do_read_body()
+{
+    std::cout << "do_read_body()" << std::endl;
+
+    boost::asio::async_read(socket_,
+                            boost::asio::buffer(readMsg_.GetBody(), readMsg_.GetMessageLength()),
+                            [this](const boost::system::error_code &ec, std::size_t /*lenght*/)
+    {
+        if (!ec)
+        {
+            std::cout.write(readMsg_.GetBody(), readMsg_.GetMessageLength());
+            std::cout << std::endl;
+            do_read_header();
+        }
+        else
+            socket_.close();
+    });
 }

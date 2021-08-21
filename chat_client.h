@@ -25,6 +25,8 @@ private:
 
     void do_read_header();
 
+    void do_read_body();
+
 private:
     boost::asio::io_context &io_context_;
 
