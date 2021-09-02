@@ -27,15 +27,13 @@ public:
 
     inline std::size_t GetLength() const { return messageLength_; }
 
-    ENCODE_STATUS EncodeMessage(const std::string &message);
+    ENCODE_STATUS EncodeMessage(std::string &&message);
     
     std::string DecodeMessage();
 
     void EncodeHeader();
 
     bool DecodeHeader();
-
-    std::size_t GetMessageLength() const;
 
     const char * GetData() const;
 

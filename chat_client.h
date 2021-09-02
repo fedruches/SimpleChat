@@ -27,6 +27,8 @@ private:
 
     void do_read_body();
 
+    void do_write();
+
 private:
     boost::asio::io_context &io_context_;
 

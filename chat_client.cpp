@@ -45,14 +45,31 @@ void ChatClient::do_read_body()
     std::cout << "do_read_body()" << std::endl;
 
     boost::asio::async_read(socket_,
-                            boost::asio::buffer(readMsg_.GetBody(), readMsg_.GetMessageLength()),
+                            boost::asio::buffer(readMsg_.GetBody(), readMsg_.GetLength()),
                             [this](const boost::system::error_code &ec, std::size_t /*lenght*/)
     {
         if (!ec)
         {
-            std::cout.write(readMsg_.GetBody(), readMsg_.GetMessageLength());
+            std::cout.write(readMsg_.GetBody(), readMsg_.GetLength());
             std::cout << std::endl;
             do_read_header();
+        }
+        else
+            socket_.close();
+    });
+}
+
+void ChatClient::do_write()
+{
+    boost::asio::async_write(socket_,
+                             boost::asio::buffer(writeMsgs_.front().GetData(), writeMsgs_.front().GetLength()),
+                             [this](const boost::system::error_code &ec, std::size_t /*lenght*/)
+    {
+        if (!ec)
+        {
+            writeMsgs_.pop_front();
+            if(!writeMsgs_.empty())
+                do_write();
         }
         else
             socket_.close();

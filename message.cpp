@@ -5,7 +5,7 @@ Message::Message() : messageLength_{0}
     data_.fill(0);
 }
 
-Message::ENCODE_STATUS Message::EncodeMessage(const std::string &message)
+Message::ENCODE_STATUS Message::EncodeMessage(std::string &&message)
 {
     if (message.size() > maxMessageLength_)
     {
@@ -47,11 +47,6 @@ bool Message::DecodeHeader()
     }
 
     return true;
-}
-
-std::size_t Message::GetMessageLength() const
-{
-    return messageLength_;
 }
 
 const char *Message::GetData() const
